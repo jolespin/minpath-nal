@@ -1,0 +1,38 @@
+{% set name = "minpath-nal" %}
+{% set version = "1.6.1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/jolespin/{{name}}/releases/download/v{{version}}/{{name}}-{{version}}.tar.gz
+
+build:
+  noarch: python
+  number: 0
+  script:
+    - wget https://github.com/jolespin/{{name}}/releases/download/v{{version}}/{{name}}-{{version}}.tar.gz
+    - tar -xzf {{name}}-{{version}}.tar.gz
+    - mkdir -p ${PREFIX}/bin
+    - cp -r minpath-nal/bin/* ${PREFIX}/bin/
+
+requirements:
+  host:
+    - python
+    - wget
+  build:
+    - python
+    - wget
+  run:
+    - python
+    - pandas >=0.24.2
+    - tqdm
+    - glpk == 4.60
+
+about:
+  home: https://github.com/jolespin/minpath-nal
+  license: MIT
+  license_family: MIT
+  summary: 'MinPath (Minimal set of Pathways)'
+  description: 'MinPath (Minimal set of Pathways) is a parsimony approach for biological pathway reconstructions using protein family predictions, achieving a more conservative, yet more faithful, estimation of the biological pathways for a query dataset.'
